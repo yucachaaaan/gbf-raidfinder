@@ -34,16 +34,16 @@ For example, if the above was saved as the file `/path/to/env`, and you
 wanted to run the app on port 5555 of the host machine:
 
 ```
-docker run -p5555:9000 --env-file /path/to/env walfie/gbf-raidfinder
+docker run -p 5555:9000 --env-file /path/to/env walfie/gbf-raidfinder
 ```
 
-The above would bind port 9000 of the application to port 1234 of the
+The above would bind port 9000 of the application to port 5555 of the
 host machine, and set environment variables based on the file.
 
 This is equivalent to:
 
 ```
-docker run -p5555:9000 \
+docker run -p 5555:9000 \
   -e oauth.consumerKey=***** \
   -e oauth.consumerSecret=***** \
   -e oauth.accessToken=***** \
@@ -55,6 +55,16 @@ docker run -p5555:9000 \
 On success, the application will be available on port 5555 of the host
 machine.
 
+You can also add the `-d` and `--restart unless-stopped` to run it in
+the background:
+
+```
+docker run -d -p 5555:9000 --restart unless-stopped --env-file /path/to/env walfie/gbf-raidfinder
+```
+
+For instructions on running it behind an nginx proxy, you can refer to 
+[this comment by Laforeta](https://github.com/walfie/gbf-raidfinder/issues/106#issuecomment-278902413).
+
 ### Building
 
 If you want to build the image yourself instead of using the pre-built
@@ -63,4 +73,3 @@ one on DockerHub, you can run the following in the root directory:
 ```
 sbt docker:publish
 ```
-
